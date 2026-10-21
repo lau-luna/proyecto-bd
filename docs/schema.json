@@ -1,0 +1,1730 @@
+{
+  "name": "facu",
+  "tables": [
+    {
+      "name": "proyecto.zapato",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "modelo",
+          "type": "varchar(30)",
+          "nullable": false
+        },
+        {
+          "name": "color",
+          "type": "varchar(30)",
+          "nullable": false
+        },
+        {
+          "name": "precio",
+          "type": "double precision",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "pkzapato",
+          "def": "CREATE UNIQUE INDEX pkzapato ON proyecto.zapato USING btree (modelo, color)",
+          "table": "proyecto.zapato",
+          "columns": [
+            "modelo",
+            "color"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "checkprecio",
+          "type": "CHECK",
+          "def": "CHECK (((precio \u003e (0)::double precision) AND (precio \u003c (200000)::double precision)))",
+          "table": "proyecto.zapato",
+          "referenced_table": "",
+          "columns": [
+            "precio"
+          ]
+        },
+        {
+          "name": "zapato_color_not_null",
+          "type": "n",
+          "def": "NOT NULL color",
+          "table": "proyecto.zapato",
+          "referenced_table": "",
+          "columns": [
+            "color"
+          ]
+        },
+        {
+          "name": "zapato_modelo_not_null",
+          "type": "n",
+          "def": "NOT NULL modelo",
+          "table": "proyecto.zapato",
+          "referenced_table": "",
+          "columns": [
+            "modelo"
+          ]
+        },
+        {
+          "name": "zapato_precio_not_null",
+          "type": "n",
+          "def": "NOT NULL precio",
+          "table": "proyecto.zapato",
+          "referenced_table": "",
+          "columns": [
+            "precio"
+          ]
+        },
+        {
+          "name": "pkzapato",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (modelo, color)",
+          "table": "proyecto.zapato",
+          "referenced_table": "",
+          "columns": [
+            "modelo",
+            "color"
+          ]
+        }
+      ],
+      "triggers": [
+        {
+          "name": "auditoria_precio_zapato",
+          "def": "CREATE TRIGGER auditoria_precio_zapato AFTER UPDATE OF precio ON proyecto.zapato FOR EACH ROW EXECUTE FUNCTION proyecto.auditar_actualizacion_precio()"
+        }
+      ]
+    },
+    {
+      "name": "proyecto.talle",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "numero",
+          "type": "double precision",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "talle_pkey",
+          "def": "CREATE UNIQUE INDEX talle_pkey ON proyecto.talle USING btree (numero)",
+          "table": "proyecto.talle",
+          "columns": [
+            "numero"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "talle_numero_not_null",
+          "type": "n",
+          "def": "NOT NULL numero",
+          "table": "proyecto.talle",
+          "referenced_table": "",
+          "columns": [
+            "numero"
+          ]
+        },
+        {
+          "name": "talle_pkey",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (numero)",
+          "table": "proyecto.talle",
+          "referenced_table": "",
+          "columns": [
+            "numero"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "proyecto.proveedor",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "cuit",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "razon_social",
+          "type": "varchar(100)",
+          "nullable": false
+        },
+        {
+          "name": "direccion",
+          "type": "varchar(100)",
+          "nullable": false
+        },
+        {
+          "name": "tel_fijo",
+          "type": "varchar(15)",
+          "nullable": true
+        }
+      ],
+      "indexes": [
+        {
+          "name": "proveedor_pkey",
+          "def": "CREATE UNIQUE INDEX proveedor_pkey ON proyecto.proveedor USING btree (cuit)",
+          "table": "proyecto.proveedor",
+          "columns": [
+            "cuit"
+          ]
+        },
+        {
+          "name": "ccrazon_social",
+          "def": "CREATE UNIQUE INDEX ccrazon_social ON proyecto.proveedor USING btree (razon_social)",
+          "table": "proyecto.proveedor",
+          "columns": [
+            "razon_social"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "proveedor_cuit_not_null",
+          "type": "n",
+          "def": "NOT NULL cuit",
+          "table": "proyecto.proveedor",
+          "referenced_table": "",
+          "columns": [
+            "cuit"
+          ]
+        },
+        {
+          "name": "proveedor_direccion_not_null",
+          "type": "n",
+          "def": "NOT NULL direccion",
+          "table": "proyecto.proveedor",
+          "referenced_table": "",
+          "columns": [
+            "direccion"
+          ]
+        },
+        {
+          "name": "proveedor_razon_social_not_null",
+          "type": "n",
+          "def": "NOT NULL razon_social",
+          "table": "proyecto.proveedor",
+          "referenced_table": "",
+          "columns": [
+            "razon_social"
+          ]
+        },
+        {
+          "name": "proveedor_pkey",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (cuit)",
+          "table": "proyecto.proveedor",
+          "referenced_table": "",
+          "columns": [
+            "cuit"
+          ]
+        },
+        {
+          "name": "ccrazon_social",
+          "type": "UNIQUE",
+          "def": "UNIQUE (razon_social)",
+          "table": "proyecto.proveedor",
+          "referenced_table": "",
+          "columns": [
+            "razon_social"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "proyecto.mcelulares",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "cuit",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "celulares",
+          "type": "varchar(15)",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "pkcelulares",
+          "def": "CREATE UNIQUE INDEX pkcelulares ON proyecto.mcelulares USING btree (cuit, celulares)",
+          "table": "proyecto.mcelulares",
+          "columns": [
+            "cuit",
+            "celulares"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "mcelulares_celulares_not_null",
+          "type": "n",
+          "def": "NOT NULL celulares",
+          "table": "proyecto.mcelulares",
+          "referenced_table": "",
+          "columns": [
+            "celulares"
+          ]
+        },
+        {
+          "name": "mcelulares_cuit_not_null",
+          "type": "n",
+          "def": "NOT NULL cuit",
+          "table": "proyecto.mcelulares",
+          "referenced_table": "",
+          "columns": [
+            "cuit"
+          ]
+        },
+        {
+          "name": "fkproveedor",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (cuit) REFERENCES proyecto.proveedor(cuit)",
+          "table": "proyecto.mcelulares",
+          "referenced_table": "proveedor",
+          "columns": [
+            "cuit"
+          ],
+          "referenced_columns": [
+            "cuit"
+          ]
+        },
+        {
+          "name": "pkcelulares",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (cuit, celulares)",
+          "table": "proyecto.mcelulares",
+          "referenced_table": "",
+          "columns": [
+            "cuit",
+            "celulares"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "proyecto.persona",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "dni",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "nombre",
+          "type": "varchar(20)",
+          "nullable": false
+        },
+        {
+          "name": "apellido",
+          "type": "varchar(20)",
+          "nullable": false
+        },
+        {
+          "name": "direccion",
+          "type": "varchar(100)",
+          "nullable": true
+        }
+      ],
+      "indexes": [
+        {
+          "name": "persona_pkey",
+          "def": "CREATE UNIQUE INDEX persona_pkey ON proyecto.persona USING btree (dni)",
+          "table": "proyecto.persona",
+          "columns": [
+            "dni"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "persona_apellido_not_null",
+          "type": "n",
+          "def": "NOT NULL apellido",
+          "table": "proyecto.persona",
+          "referenced_table": "",
+          "columns": [
+            "apellido"
+          ]
+        },
+        {
+          "name": "persona_dni_not_null",
+          "type": "n",
+          "def": "NOT NULL dni",
+          "table": "proyecto.persona",
+          "referenced_table": "",
+          "columns": [
+            "dni"
+          ]
+        },
+        {
+          "name": "persona_nombre_not_null",
+          "type": "n",
+          "def": "NOT NULL nombre",
+          "table": "proyecto.persona",
+          "referenced_table": "",
+          "columns": [
+            "nombre"
+          ]
+        },
+        {
+          "name": "persona_pkey",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (dni)",
+          "table": "proyecto.persona",
+          "referenced_table": "",
+          "columns": [
+            "dni"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "proyecto.vendedor",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "dni",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "numero",
+          "type": "integer",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "vendedor_pkey",
+          "def": "CREATE UNIQUE INDEX vendedor_pkey ON proyecto.vendedor USING btree (dni)",
+          "table": "proyecto.vendedor",
+          "columns": [
+            "dni"
+          ]
+        },
+        {
+          "name": "ccnumero_vendedor",
+          "def": "CREATE UNIQUE INDEX ccnumero_vendedor ON proyecto.vendedor USING btree (numero)",
+          "table": "proyecto.vendedor",
+          "columns": [
+            "numero"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "vendedor_dni_not_null",
+          "type": "n",
+          "def": "NOT NULL dni",
+          "table": "proyecto.vendedor",
+          "referenced_table": "",
+          "columns": [
+            "dni"
+          ]
+        },
+        {
+          "name": "vendedor_numero_not_null",
+          "type": "n",
+          "def": "NOT NULL numero",
+          "table": "proyecto.vendedor",
+          "referenced_table": "",
+          "columns": [
+            "numero"
+          ]
+        },
+        {
+          "name": "vendedor_dni_fkey",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (dni) REFERENCES proyecto.persona(dni)",
+          "table": "proyecto.vendedor",
+          "referenced_table": "persona",
+          "columns": [
+            "dni"
+          ],
+          "referenced_columns": [
+            "dni"
+          ]
+        },
+        {
+          "name": "vendedor_pkey",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (dni)",
+          "table": "proyecto.vendedor",
+          "referenced_table": "",
+          "columns": [
+            "dni"
+          ]
+        },
+        {
+          "name": "ccnumero_vendedor",
+          "type": "UNIQUE",
+          "def": "UNIQUE (numero)",
+          "table": "proyecto.vendedor",
+          "referenced_table": "",
+          "columns": [
+            "numero"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "proyecto.cliente",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "dni",
+          "type": "integer",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "cliente_pkey",
+          "def": "CREATE UNIQUE INDEX cliente_pkey ON proyecto.cliente USING btree (dni)",
+          "table": "proyecto.cliente",
+          "columns": [
+            "dni"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "cliente_dni_not_null",
+          "type": "n",
+          "def": "NOT NULL dni",
+          "table": "proyecto.cliente",
+          "referenced_table": "",
+          "columns": [
+            "dni"
+          ]
+        },
+        {
+          "name": "cliente_dni_fkey",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (dni) REFERENCES proyecto.persona(dni)",
+          "table": "proyecto.cliente",
+          "referenced_table": "persona",
+          "columns": [
+            "dni"
+          ],
+          "referenced_columns": [
+            "dni"
+          ]
+        },
+        {
+          "name": "cliente_pkey",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (dni)",
+          "table": "proyecto.cliente",
+          "referenced_table": "",
+          "columns": [
+            "dni"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "proyecto.minorista",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "dni",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "fecha_nacimiento",
+          "type": "date",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "minorista_pkey",
+          "def": "CREATE UNIQUE INDEX minorista_pkey ON proyecto.minorista USING btree (dni)",
+          "table": "proyecto.minorista",
+          "columns": [
+            "dni"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "minorista_dni_not_null",
+          "type": "n",
+          "def": "NOT NULL dni",
+          "table": "proyecto.minorista",
+          "referenced_table": "",
+          "columns": [
+            "dni"
+          ]
+        },
+        {
+          "name": "minorista_fecha_nacimiento_not_null",
+          "type": "n",
+          "def": "NOT NULL fecha_nacimiento",
+          "table": "proyecto.minorista",
+          "referenced_table": "",
+          "columns": [
+            "fecha_nacimiento"
+          ]
+        },
+        {
+          "name": "minorista_dni_fkey",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (dni) REFERENCES proyecto.cliente(dni)",
+          "table": "proyecto.minorista",
+          "referenced_table": "cliente",
+          "columns": [
+            "dni"
+          ],
+          "referenced_columns": [
+            "dni"
+          ]
+        },
+        {
+          "name": "minorista_pkey",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (dni)",
+          "table": "proyecto.minorista",
+          "referenced_table": "",
+          "columns": [
+            "dni"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "proyecto.mayorista",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "dni",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "descuento",
+          "type": "double precision",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "mayorista_pkey",
+          "def": "CREATE UNIQUE INDEX mayorista_pkey ON proyecto.mayorista USING btree (dni)",
+          "table": "proyecto.mayorista",
+          "columns": [
+            "dni"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "mayorista_descuento_not_null",
+          "type": "n",
+          "def": "NOT NULL descuento",
+          "table": "proyecto.mayorista",
+          "referenced_table": "",
+          "columns": [
+            "descuento"
+          ]
+        },
+        {
+          "name": "mayorista_dni_not_null",
+          "type": "n",
+          "def": "NOT NULL dni",
+          "table": "proyecto.mayorista",
+          "referenced_table": "",
+          "columns": [
+            "dni"
+          ]
+        },
+        {
+          "name": "mayorista_dni_fkey",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (dni) REFERENCES proyecto.cliente(dni)",
+          "table": "proyecto.mayorista",
+          "referenced_table": "cliente",
+          "columns": [
+            "dni"
+          ],
+          "referenced_columns": [
+            "dni"
+          ]
+        },
+        {
+          "name": "mayorista_pkey",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (dni)",
+          "table": "proyecto.mayorista",
+          "referenced_table": "",
+          "columns": [
+            "dni"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "proyecto.venta",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "numero_factura",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "fecha",
+          "type": "date",
+          "nullable": false
+        },
+        {
+          "name": "dni_cliente",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "descuento_venta",
+          "type": "double precision",
+          "nullable": true
+        },
+        {
+          "name": "dni_vendedor",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "monto",
+          "type": "double precision",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "venta_pkey",
+          "def": "CREATE UNIQUE INDEX venta_pkey ON proyecto.venta USING btree (numero_factura)",
+          "table": "proyecto.venta",
+          "columns": [
+            "numero_factura"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "checkdescuento",
+          "type": "CHECK",
+          "def": "CHECK (((descuento_venta \u003e= (0)::double precision) AND (descuento_venta \u003c= (100)::double precision)))",
+          "table": "proyecto.venta",
+          "referenced_table": "",
+          "columns": [
+            "descuento_venta"
+          ]
+        },
+        {
+          "name": "venta_dni_cliente_not_null",
+          "type": "n",
+          "def": "NOT NULL dni_cliente",
+          "table": "proyecto.venta",
+          "referenced_table": "",
+          "columns": [
+            "dni_cliente"
+          ]
+        },
+        {
+          "name": "venta_dni_vendedor_not_null",
+          "type": "n",
+          "def": "NOT NULL dni_vendedor",
+          "table": "proyecto.venta",
+          "referenced_table": "",
+          "columns": [
+            "dni_vendedor"
+          ]
+        },
+        {
+          "name": "venta_fecha_not_null",
+          "type": "n",
+          "def": "NOT NULL fecha",
+          "table": "proyecto.venta",
+          "referenced_table": "",
+          "columns": [
+            "fecha"
+          ]
+        },
+        {
+          "name": "venta_monto_not_null",
+          "type": "n",
+          "def": "NOT NULL monto",
+          "table": "proyecto.venta",
+          "referenced_table": "",
+          "columns": [
+            "monto"
+          ]
+        },
+        {
+          "name": "venta_numero_factura_not_null",
+          "type": "n",
+          "def": "NOT NULL numero_factura",
+          "table": "proyecto.venta",
+          "referenced_table": "",
+          "columns": [
+            "numero_factura"
+          ]
+        },
+        {
+          "name": "venta_dni_vendedor_fkey",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (dni_vendedor) REFERENCES proyecto.vendedor(dni)",
+          "table": "proyecto.venta",
+          "referenced_table": "vendedor",
+          "columns": [
+            "dni_vendedor"
+          ],
+          "referenced_columns": [
+            "dni"
+          ]
+        },
+        {
+          "name": "venta_dni_cliente_fkey",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (dni_cliente) REFERENCES proyecto.cliente(dni)",
+          "table": "proyecto.venta",
+          "referenced_table": "cliente",
+          "columns": [
+            "dni_cliente"
+          ],
+          "referenced_columns": [
+            "dni"
+          ]
+        },
+        {
+          "name": "venta_pkey",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (numero_factura)",
+          "table": "proyecto.venta",
+          "referenced_table": "",
+          "columns": [
+            "numero_factura"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "proyecto.franco",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "numero",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "fecha",
+          "type": "date",
+          "nullable": false
+        },
+        {
+          "name": "observacion",
+          "type": "varchar(100)",
+          "nullable": true
+        },
+        {
+          "name": "dni",
+          "type": "integer",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "franco_pkey",
+          "def": "CREATE UNIQUE INDEX franco_pkey ON proyecto.franco USING btree (numero)",
+          "table": "proyecto.franco",
+          "columns": [
+            "numero"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "franco_dni_not_null",
+          "type": "n",
+          "def": "NOT NULL dni",
+          "table": "proyecto.franco",
+          "referenced_table": "",
+          "columns": [
+            "dni"
+          ]
+        },
+        {
+          "name": "franco_fecha_not_null",
+          "type": "n",
+          "def": "NOT NULL fecha",
+          "table": "proyecto.franco",
+          "referenced_table": "",
+          "columns": [
+            "fecha"
+          ]
+        },
+        {
+          "name": "franco_numero_not_null",
+          "type": "n",
+          "def": "NOT NULL numero",
+          "table": "proyecto.franco",
+          "referenced_table": "",
+          "columns": [
+            "numero"
+          ]
+        },
+        {
+          "name": "franco_dni_fkey",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (dni) REFERENCES proyecto.vendedor(dni)",
+          "table": "proyecto.franco",
+          "referenced_table": "vendedor",
+          "columns": [
+            "dni"
+          ],
+          "referenced_columns": [
+            "dni"
+          ]
+        },
+        {
+          "name": "franco_pkey",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (numero)",
+          "table": "proyecto.franco",
+          "referenced_table": "",
+          "columns": [
+            "numero"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "proyecto.dia",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "nombre",
+          "type": "varchar(10)",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "dia_pkey",
+          "def": "CREATE UNIQUE INDEX dia_pkey ON proyecto.dia USING btree (nombre)",
+          "table": "proyecto.dia",
+          "columns": [
+            "nombre"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "dia_nombre_not_null",
+          "type": "n",
+          "def": "NOT NULL nombre",
+          "table": "proyecto.dia",
+          "referenced_table": "",
+          "columns": [
+            "nombre"
+          ]
+        },
+        {
+          "name": "dia_pkey",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (nombre)",
+          "table": "proyecto.dia",
+          "referenced_table": "",
+          "columns": [
+            "nombre"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "proyecto.provee",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "cuit",
+          "type": "bigint",
+          "nullable": false
+        },
+        {
+          "name": "modelo",
+          "type": "varchar(30)",
+          "nullable": false
+        },
+        {
+          "name": "color",
+          "type": "varchar(30)",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        {
+          "name": "provee_color_not_null",
+          "type": "n",
+          "def": "NOT NULL color",
+          "table": "proyecto.provee",
+          "referenced_table": "",
+          "columns": [
+            "color"
+          ]
+        },
+        {
+          "name": "provee_cuit_not_null",
+          "type": "n",
+          "def": "NOT NULL cuit",
+          "table": "proyecto.provee",
+          "referenced_table": "",
+          "columns": [
+            "cuit"
+          ]
+        },
+        {
+          "name": "provee_modelo_not_null",
+          "type": "n",
+          "def": "NOT NULL modelo",
+          "table": "proyecto.provee",
+          "referenced_table": "",
+          "columns": [
+            "modelo"
+          ]
+        },
+        {
+          "name": "fkprovee",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (modelo, color) REFERENCES proyecto.zapato(modelo, color)",
+          "table": "proyecto.provee",
+          "referenced_table": "zapato",
+          "columns": [
+            "modelo",
+            "color"
+          ],
+          "referenced_columns": [
+            "modelo",
+            "color"
+          ]
+        },
+        {
+          "name": "provee_cuit_fkey",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (cuit) REFERENCES proyecto.proveedor(cuit)",
+          "table": "proyecto.provee",
+          "referenced_table": "proveedor",
+          "columns": [
+            "cuit"
+          ],
+          "referenced_columns": [
+            "cuit"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "proyecto.tiene",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "modelo",
+          "type": "varchar(30)",
+          "nullable": false
+        },
+        {
+          "name": "color",
+          "type": "varchar(30)",
+          "nullable": false
+        },
+        {
+          "name": "numero",
+          "type": "double precision",
+          "nullable": false
+        },
+        {
+          "name": "cantidad",
+          "type": "integer",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "pktiene",
+          "def": "CREATE UNIQUE INDEX pktiene ON proyecto.tiene USING btree (modelo, color, numero)",
+          "table": "proyecto.tiene",
+          "columns": [
+            "modelo",
+            "color",
+            "numero"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "tiene_cantidad_not_null",
+          "type": "n",
+          "def": "NOT NULL cantidad",
+          "table": "proyecto.tiene",
+          "referenced_table": "",
+          "columns": [
+            "cantidad"
+          ]
+        },
+        {
+          "name": "tiene_color_not_null",
+          "type": "n",
+          "def": "NOT NULL color",
+          "table": "proyecto.tiene",
+          "referenced_table": "",
+          "columns": [
+            "color"
+          ]
+        },
+        {
+          "name": "tiene_modelo_not_null",
+          "type": "n",
+          "def": "NOT NULL modelo",
+          "table": "proyecto.tiene",
+          "referenced_table": "",
+          "columns": [
+            "modelo"
+          ]
+        },
+        {
+          "name": "tiene_numero_not_null",
+          "type": "n",
+          "def": "NOT NULL numero",
+          "table": "proyecto.tiene",
+          "referenced_table": "",
+          "columns": [
+            "numero"
+          ]
+        },
+        {
+          "name": "fkprovee",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (modelo, color) REFERENCES proyecto.zapato(modelo, color)",
+          "table": "proyecto.tiene",
+          "referenced_table": "zapato",
+          "columns": [
+            "modelo",
+            "color"
+          ],
+          "referenced_columns": [
+            "modelo",
+            "color"
+          ]
+        },
+        {
+          "name": "tiene_numero_fkey",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (numero) REFERENCES proyecto.talle(numero)",
+          "table": "proyecto.tiene",
+          "referenced_table": "talle",
+          "columns": [
+            "numero"
+          ],
+          "referenced_columns": [
+            "numero"
+          ]
+        },
+        {
+          "name": "pktiene",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (modelo, color, numero)",
+          "table": "proyecto.tiene",
+          "referenced_table": "",
+          "columns": [
+            "modelo",
+            "color",
+            "numero"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "proyecto.horario",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "dni_vendedor",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "nombre",
+          "type": "varchar(10)",
+          "nullable": false
+        },
+        {
+          "name": "hora_salida",
+          "type": "time without time zone",
+          "nullable": false
+        },
+        {
+          "name": "hora_entrada",
+          "type": "time without time zone",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "pkhorario",
+          "def": "CREATE UNIQUE INDEX pkhorario ON proyecto.horario USING btree (dni_vendedor, nombre)",
+          "table": "proyecto.horario",
+          "columns": [
+            "dni_vendedor",
+            "nombre"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "horario_dni_vendedor_not_null",
+          "type": "n",
+          "def": "NOT NULL dni_vendedor",
+          "table": "proyecto.horario",
+          "referenced_table": "",
+          "columns": [
+            "dni_vendedor"
+          ]
+        },
+        {
+          "name": "horario_hora_entrada_not_null",
+          "type": "n",
+          "def": "NOT NULL hora_entrada",
+          "table": "proyecto.horario",
+          "referenced_table": "",
+          "columns": [
+            "hora_entrada"
+          ]
+        },
+        {
+          "name": "horario_hora_salida_not_null",
+          "type": "n",
+          "def": "NOT NULL hora_salida",
+          "table": "proyecto.horario",
+          "referenced_table": "",
+          "columns": [
+            "hora_salida"
+          ]
+        },
+        {
+          "name": "horario_nombre_not_null",
+          "type": "n",
+          "def": "NOT NULL nombre",
+          "table": "proyecto.horario",
+          "referenced_table": "",
+          "columns": [
+            "nombre"
+          ]
+        },
+        {
+          "name": "horario_dni_vendedor_fkey",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (dni_vendedor) REFERENCES proyecto.vendedor(dni)",
+          "table": "proyecto.horario",
+          "referenced_table": "vendedor",
+          "columns": [
+            "dni_vendedor"
+          ],
+          "referenced_columns": [
+            "dni"
+          ]
+        },
+        {
+          "name": "horario_nombre_fkey",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (nombre) REFERENCES proyecto.dia(nombre)",
+          "table": "proyecto.horario",
+          "referenced_table": "dia",
+          "columns": [
+            "nombre"
+          ],
+          "referenced_columns": [
+            "nombre"
+          ]
+        },
+        {
+          "name": "pkhorario",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (dni_vendedor, nombre)",
+          "table": "proyecto.horario",
+          "referenced_table": "",
+          "columns": [
+            "dni_vendedor",
+            "nombre"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "proyecto.vendio",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "modelo",
+          "type": "varchar(30)",
+          "nullable": false
+        },
+        {
+          "name": "color",
+          "type": "varchar(30)",
+          "nullable": false
+        },
+        {
+          "name": "numero",
+          "type": "double precision",
+          "nullable": false
+        },
+        {
+          "name": "numero_factura",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "cantidad",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "precio_venta",
+          "type": "double precision",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "pkvendio",
+          "def": "CREATE UNIQUE INDEX pkvendio ON proyecto.vendio USING btree (modelo, color, numero, numero_factura)",
+          "table": "proyecto.vendio",
+          "columns": [
+            "modelo",
+            "color",
+            "numero",
+            "numero_factura"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "vendio_cantidad_not_null",
+          "type": "n",
+          "def": "NOT NULL cantidad",
+          "table": "proyecto.vendio",
+          "referenced_table": "",
+          "columns": [
+            "cantidad"
+          ]
+        },
+        {
+          "name": "vendio_color_not_null",
+          "type": "n",
+          "def": "NOT NULL color",
+          "table": "proyecto.vendio",
+          "referenced_table": "",
+          "columns": [
+            "color"
+          ]
+        },
+        {
+          "name": "vendio_modelo_not_null",
+          "type": "n",
+          "def": "NOT NULL modelo",
+          "table": "proyecto.vendio",
+          "referenced_table": "",
+          "columns": [
+            "modelo"
+          ]
+        },
+        {
+          "name": "vendio_numero_factura_not_null",
+          "type": "n",
+          "def": "NOT NULL numero_factura",
+          "table": "proyecto.vendio",
+          "referenced_table": "",
+          "columns": [
+            "numero_factura"
+          ]
+        },
+        {
+          "name": "vendio_numero_not_null",
+          "type": "n",
+          "def": "NOT NULL numero",
+          "table": "proyecto.vendio",
+          "referenced_table": "",
+          "columns": [
+            "numero"
+          ]
+        },
+        {
+          "name": "vendio_precio_venta_not_null",
+          "type": "n",
+          "def": "NOT NULL precio_venta",
+          "table": "proyecto.vendio",
+          "referenced_table": "",
+          "columns": [
+            "precio_venta"
+          ]
+        },
+        {
+          "name": "vendio_numero_fkey",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (numero) REFERENCES proyecto.talle(numero)",
+          "table": "proyecto.vendio",
+          "referenced_table": "talle",
+          "columns": [
+            "numero"
+          ],
+          "referenced_columns": [
+            "numero"
+          ]
+        },
+        {
+          "name": "fkvendio",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (modelo, color, numero) REFERENCES proyecto.tiene(modelo, color, numero)",
+          "table": "proyecto.vendio",
+          "referenced_table": "tiene",
+          "columns": [
+            "modelo",
+            "color",
+            "numero"
+          ],
+          "referenced_columns": [
+            "modelo",
+            "color",
+            "numero"
+          ]
+        },
+        {
+          "name": "pkvendio",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (modelo, color, numero, numero_factura)",
+          "table": "proyecto.vendio",
+          "referenced_table": "",
+          "columns": [
+            "modelo",
+            "color",
+            "numero",
+            "numero_factura"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "proyecto.auditoria",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "fecha",
+          "type": "date",
+          "nullable": false
+        },
+        {
+          "name": "precio_anterior",
+          "type": "double precision",
+          "nullable": false
+        },
+        {
+          "name": "precio_nuevo",
+          "type": "double precision",
+          "nullable": false
+        },
+        {
+          "name": "modelo",
+          "type": "varchar(30)",
+          "nullable": true
+        },
+        {
+          "name": "color",
+          "type": "varchar(30)",
+          "nullable": true
+        },
+        {
+          "name": "usuario",
+          "type": "varchar(100)",
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        {
+          "name": "auditoria_fecha_not_null",
+          "type": "n",
+          "def": "NOT NULL fecha",
+          "table": "proyecto.auditoria",
+          "referenced_table": "",
+          "columns": [
+            "fecha"
+          ]
+        },
+        {
+          "name": "auditoria_precio_anterior_not_null",
+          "type": "n",
+          "def": "NOT NULL precio_anterior",
+          "table": "proyecto.auditoria",
+          "referenced_table": "",
+          "columns": [
+            "precio_anterior"
+          ]
+        },
+        {
+          "name": "auditoria_precio_nuevo_not_null",
+          "type": "n",
+          "def": "NOT NULL precio_nuevo",
+          "table": "proyecto.auditoria",
+          "referenced_table": "",
+          "columns": [
+            "precio_nuevo"
+          ]
+        }
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "table": "proyecto.mcelulares",
+      "columns": [
+        "cuit"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "proyecto.proveedor",
+      "parent_columns": [
+        "cuit"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (cuit) REFERENCES proyecto.proveedor(cuit)"
+    },
+    {
+      "table": "proyecto.vendedor",
+      "columns": [
+        "dni"
+      ],
+      "cardinality": "zero_or_one",
+      "parent_table": "proyecto.persona",
+      "parent_columns": [
+        "dni"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (dni) REFERENCES proyecto.persona(dni)"
+    },
+    {
+      "table": "proyecto.cliente",
+      "columns": [
+        "dni"
+      ],
+      "cardinality": "zero_or_one",
+      "parent_table": "proyecto.persona",
+      "parent_columns": [
+        "dni"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (dni) REFERENCES proyecto.persona(dni)"
+    },
+    {
+      "table": "proyecto.minorista",
+      "columns": [
+        "dni"
+      ],
+      "cardinality": "zero_or_one",
+      "parent_table": "proyecto.cliente",
+      "parent_columns": [
+        "dni"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (dni) REFERENCES proyecto.cliente(dni)"
+    },
+    {
+      "table": "proyecto.mayorista",
+      "columns": [
+        "dni"
+      ],
+      "cardinality": "zero_or_one",
+      "parent_table": "proyecto.cliente",
+      "parent_columns": [
+        "dni"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (dni) REFERENCES proyecto.cliente(dni)"
+    },
+    {
+      "table": "proyecto.venta",
+      "columns": [
+        "dni_vendedor"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "proyecto.vendedor",
+      "parent_columns": [
+        "dni"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (dni_vendedor) REFERENCES proyecto.vendedor(dni)"
+    },
+    {
+      "table": "proyecto.venta",
+      "columns": [
+        "dni_cliente"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "proyecto.cliente",
+      "parent_columns": [
+        "dni"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (dni_cliente) REFERENCES proyecto.cliente(dni)"
+    },
+    {
+      "table": "proyecto.franco",
+      "columns": [
+        "dni"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "proyecto.vendedor",
+      "parent_columns": [
+        "dni"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (dni) REFERENCES proyecto.vendedor(dni)"
+    },
+    {
+      "table": "proyecto.provee",
+      "columns": [
+        "modelo",
+        "color"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "proyecto.zapato",
+      "parent_columns": [
+        "modelo",
+        "color"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (modelo, color) REFERENCES proyecto.zapato(modelo, color)"
+    },
+    {
+      "table": "proyecto.provee",
+      "columns": [
+        "cuit"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "proyecto.proveedor",
+      "parent_columns": [
+        "cuit"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (cuit) REFERENCES proyecto.proveedor(cuit)"
+    },
+    {
+      "table": "proyecto.tiene",
+      "columns": [
+        "modelo",
+        "color"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "proyecto.zapato",
+      "parent_columns": [
+        "modelo",
+        "color"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (modelo, color) REFERENCES proyecto.zapato(modelo, color)"
+    },
+    {
+      "table": "proyecto.tiene",
+      "columns": [
+        "numero"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "proyecto.talle",
+      "parent_columns": [
+        "numero"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (numero) REFERENCES proyecto.talle(numero)"
+    },
+    {
+      "table": "proyecto.horario",
+      "columns": [
+        "dni_vendedor"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "proyecto.vendedor",
+      "parent_columns": [
+        "dni"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (dni_vendedor) REFERENCES proyecto.vendedor(dni)"
+    },
+    {
+      "table": "proyecto.horario",
+      "columns": [
+        "nombre"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "proyecto.dia",
+      "parent_columns": [
+        "nombre"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (nombre) REFERENCES proyecto.dia(nombre)"
+    },
+    {
+      "table": "proyecto.vendio",
+      "columns": [
+        "numero"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "proyecto.talle",
+      "parent_columns": [
+        "numero"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (numero) REFERENCES proyecto.talle(numero)"
+    },
+    {
+      "table": "proyecto.vendio",
+      "columns": [
+        "modelo",
+        "color",
+        "numero"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "proyecto.tiene",
+      "parent_columns": [
+        "modelo",
+        "color",
+        "numero"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (modelo, color, numero) REFERENCES proyecto.tiene(modelo, color, numero)"
+    }
+  ],
+  "functions": [
+    {
+      "name": "proyecto.auditar_actualizacion_precio",
+      "return_type": "trigger",
+      "arguments": "",
+      "type": "FUNCTION"
+    }
+  ],
+  "driver": {
+    "name": "postgres",
+    "database_version": "PostgreSQL 18.6 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 16.2.1 20260810, 64-bit",
+    "meta": {
+      "current_schema": "public",
+      "search_paths": [
+        "postgres",
+        "public"
+      ],
+      "dict": {
+        "Functions": "Stored procedures and functions"
+      }
+    }
+  }
+}
