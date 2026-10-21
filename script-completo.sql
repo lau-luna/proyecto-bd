@@ -255,6 +255,5 @@ insert into vendio(modelo, color, numero, numero_factura, cantidad, precio_venta
 	('topper', 'negro', 35, 1004, 2, 35000),
 	('adidas', 'negro', 39, 1005, 1, 40000);
 
-
 end 
 $$
