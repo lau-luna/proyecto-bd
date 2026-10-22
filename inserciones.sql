@@ -1,5 +1,6 @@
 do $$
 begin
+set search_path to proyecto;
 
 insert into zapato(modelo,color,precio) values
 	('adidas','negro',40000),
