@@ -24,6 +24,7 @@ dependencies {
     // This dependency is used by the application.
     implementation libs.guava
 
+    // PostgreSQL driver para jdbc
     implementation 'org.postgresql:postgresql:42.7.4'
 }
 
@@ -44,6 +45,7 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+// Para permitir entrada por consola en gradle run
 run {
   standardInput = System.in
 }

@@ -18,7 +18,7 @@ public class ProveedoresApp {
     int opcion;
 
     do {
-      System.out.println(connection.getMetaData().getURL());
+      //System.out.println(connection.getMetaData().getURL());
 
       System.out.println("\n--- MENU PROVEEDORES ---");
       System.out.println("1. Insertar proveedor");
@@ -28,7 +28,6 @@ public class ProveedoresApp {
       System.out.print("Seleccione una opción: ");
 
       opcion = teclado.nextInt();
-      teclado.nextLine();
 
       switch (opcion) {
         case 1:

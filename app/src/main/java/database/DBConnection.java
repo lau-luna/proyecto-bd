@@ -10,6 +10,7 @@ public class DBConnection {
   private static String url = "jdbc:postgresql://localhost:5432/facu";
   private static String username = "lau";
   private static String password = "lau1545";
+
   // Una única conexión para todo el programa
   private Connection connection;
 
