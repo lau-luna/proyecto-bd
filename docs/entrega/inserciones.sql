@@ -110,7 +110,7 @@ insert into horario(dni_vendedor, nombre, hora_salida, hora_entrada) values
 
 insert into franco(numero, fecha, observacion, dni) values
 	(1, '2026-10-20', 'Trámites personales', 30123456),
-	(2, '2026-10-21', 'Examen facultad', 28555444);
+	(2, '2026-01-21', 'Examen facultad', 28555444);
 
 
 insert into vendio(modelo, color, numero, numero_factura, cantidad, precio_venta) values

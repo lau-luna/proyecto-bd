@@ -183,10 +183,10 @@ insert into vendedor(dni, numero) values
 	;
 
 insert into venta (numero_factura, fecha, dni_cliente, descuento_venta, dni_vendedor, monto) values
-	(1001, '2026-10-15', 25345678, 10.0, 30123456, 15400.50),
+	(1001, '2025-10-15', 25345678, 10.0, 30123456, 15400.50),
 	(1002, '2026-10-16', 31567890, 0.0, 28555444, 8900.00),
-	(1003, '2026-10-16', 42111222, 15.5, 30123456, 25000.75),
-	(1004, '2026-10-17', 20999888, 5.0, 32777888, 4320.20),
+	(1003, '2025-10-16', 42111222, 15.5, 30123456, 25000.75),
+	(1004, '2025-10-17', 20999888, 5.0, 32777888, 4320.20),
 	(1005, '2026-10-18', 35444333, 20.0, 28555444, 56700.00)
 ;
 
@@ -243,7 +243,7 @@ insert into horario(dni_vendedor, nombre, hora_salida, hora_entrada) values
 
 insert into franco(numero, fecha, observacion, dni) values
 	(1, '2026-10-20', 'Trámites personales', 30123456),
-	(2, '2026-10-21', 'Examen facultad', 28555444);
+	(2, '2026-01-21', 'Examen facultad', 28555444);
 
 
 insert into vendio(modelo, color, numero, numero_factura, cantidad, precio_venta) values
@@ -253,6 +253,14 @@ insert into vendio(modelo, color, numero, numero_factura, cantidad, precio_venta
 	('topper', 'negro', 35, 1004, 2, 35000),
 	('adidas', 'negro', 39, 1005, 1, 40000);
 
+
+insert into vendio(modelo, color, numero, numero_factura, cantidad, precio_venta) values
+	('nike', 'blanco', 42, 1001, 1, 100000),
+	('adidas', 'negro', 40, 1002, 2, 40000),
+	('adidas', 'negro', 39, 1002, 1, 40000),
+	('nike', 'blanco', 42, 1003, 5, 100000),
+	('vans', 'negro', 38, 1004, 4, 165000),
+	('topper', 'negro', 35, 1005, 3, 35000);
 
 
 end 
